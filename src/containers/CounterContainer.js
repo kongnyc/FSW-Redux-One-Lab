@@ -1,32 +1,27 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Counter from "../components/Counter";
 import { incrementCount, decrementCount } from "../actions/counterActions";
 
-class CounterContainer extends React.Component {
-  increment = () => {
-    const { dispatch } = this.props;
+const CounterContainer = () => {
+  let count = useSelector((state) => state.count)
+  let dispatch = useDispatch()
+
+  const increment = () => {
     dispatch(incrementCount());
   };
 
-  decrement = () => {
-    const { dispatch } = this.props;
+  const decrement = () => {
     dispatch(decrementCount());
   };
 
-  render() {
-    const { count } = this.props;
-    console.log(this.props);
-
-    return (
-      <Counter
-        value={count}
-        onIncrement={this.increment}
-        onDecrement={this.decrement}
-      />
-    );
-  }
+  return (
+    <Counter
+      value={count}
+      onIncrement={increment}
+      onDecrement={decrement}
+    />
+  )
 }
 
-// The component is connected to the redux store
-export default connect(state => state)(CounterContainer);
+export default CounterContainer
